@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.github.spotbugs' version "1.7.1"
     id 'maven'
     id 'idea'
     id 'eclipse'
@@ -16,12 +17,39 @@ repositories {
 }
 
 dependencies {
-    testImplementation(group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5+')
-    testRuntimeOnly(group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5+')
+    testImplementation  (group: 'org.junit.jupiter',         name: 'junit-jupiter-api',      version: '5+')
+    testRuntimeOnly     (group: 'org.junit.jupiter',         name: 'junit-jupiter-engine',   version: '5+')
+    spotbugsPlugins     (group: 'com.h3xstream.findsecbugs', name: 'findsecbugs-plugin',     version: '+')
+    compileOnly         (group: 'com.github.spotbugs',       name: 'spotbugs-annotations',   version: '+')
 }
 
 test {
     useJUnitPlatform()
+}
+
+tasks.withType(com.github.spotbugs.SpotBugsTask) {
+    spotbugs {
+        toolVersion = "4.0.0-beta1" //"3.1.12"
+     // sourceSets = [sourceSets.main]
+        ignoreFailures = false
+     // reportsDir = file("$project.buildDir/spotbugsReports")
+        effort = "max"
+        reportLevel = "low"
+     // visitors = ["FindSqlInjection", "SwitchFallthrough"]
+     // omitVisitors = ["FindNonShortCircuit"]
+     // includeFilter = file("$rootProject.projectDir/config/spotbugs/includeFilter.xml")
+     // excludeFilter = file("$rootProject.projectDir/config/spotbugs/excludeFilter.xml")
+    }
+    reports {
+        // use commandline parameter -PspotBugsXMLReport to trigger xml reporting
+        if (project.hasProperty('spotBugsXMLReport')) {
+            xml.enabled = true
+            html.enabled = false
+        } else {
+            xml.enabled = false
+            html.enabled = true
+        }
+    }
 }
 
 idea {

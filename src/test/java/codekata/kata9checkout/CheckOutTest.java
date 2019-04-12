@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class CheckOutTest {
 
-    CheckOut checkout;
+    CheckOut checkout = null;
 
     @BeforeEach
     void setUp() {
