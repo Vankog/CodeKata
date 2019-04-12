@@ -12,7 +12,7 @@ public class CheckOut {
         return total;
     }
 
-    public void scan(int price) {
-        total += price;
+    public void scan(Item item) {
+        total += item.getPrice();
     }
 }
