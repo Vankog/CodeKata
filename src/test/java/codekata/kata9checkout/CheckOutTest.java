@@ -20,10 +20,20 @@ class CheckOutTest {
         assertNotNull(checkout, "We need an instance.");
     }
 
-
     @Test
     void emptyBasketShouldReturnTotalOf_0() {
         assertEquals(0, checkout.getTotal(), "Should return zero for empty basket");
     }
 
+    @Test
+    void scanShouldIncreaseTotalPrice() {
+        checkout.scan(1);
+        assertEquals(1, checkout.getTotal(), "Should return scanned price");
+        checkout.scan(2);
+        assertEquals(3, checkout.getTotal(), "Should return total of all scanned prices");
+        checkout.scan(0);
+        assertEquals(3, checkout.getTotal(), "Should return total of all scanned prices");
+        checkout.scan(99);
+        assertEquals(102, checkout.getTotal(), "Should return total of all scanned prices");
+    }
 }

@@ -3,10 +3,16 @@ package codekata.kata9checkout;
 
 public class CheckOut {
 
+    private int total = 0;
+
     public CheckOut() {
     }
 
     public int getTotal() {
-        return 0;
+        return total;
+    }
+
+    public void scan(int price) {
+        total += price;
     }
 }
